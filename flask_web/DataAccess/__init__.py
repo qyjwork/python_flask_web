@@ -1,1 +1,1 @@
-from DataAccess import DB
+# coding=utf-8
