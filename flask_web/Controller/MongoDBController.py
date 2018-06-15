@@ -2,7 +2,7 @@ from DataAccess import MongoDB
 from flask import render_template,session,Blueprint, make_response,request,redirect,url_for,abort,flash
 
 view = Blueprint("Index", __name__)  # , template_folder="templates"
-
+db = MongoDB.mongodb()
 
 @view.route('/')
 def hello_world():
@@ -20,19 +20,19 @@ def GetUsersByUserId(userId):
         abort(500)
     #render_template
     else:
-        users = MongoDB.Users.find({"UserId": userId})
+        users = db.getCollection("Users").find({"UserId": userId})
         return render_template("index.html", users=users)
 
 
 @view.route('/GetUsers')
 def GetUsers():
-    users = MongoDB.Users.find({})
+    users = db.getCollection("Users").find({})
     return render_template("index.html", users=users)
 
 
 @view.route('/setcookie/<userid>')
 def setcookie(userid):
-    users = MongoDB.Users.find({})
+    users = db.getCollection("Users").find({})
     res = make_response(render_template("index.html", users=users))
     res.set_cookie('userID', userid)
     return res

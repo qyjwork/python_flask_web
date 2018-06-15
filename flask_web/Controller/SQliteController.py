@@ -4,7 +4,7 @@ from DataAccess import SQLite
 import sqlite3
 
 view = Blueprint("Sqlite", __name__)  # , template_folder="templates"
-
+sql = SQLite.sqlite()
 
 @view.route('/sqlite')
 def hello_world():
@@ -14,7 +14,7 @@ def hello_world():
 
 @view.route('/adduser')
 def adduser():
-    sql = SQLite.sqlite()
+
     with sql.db as con:
         try:
             cur = con.cursor()
@@ -27,7 +27,6 @@ def adduser():
 
 @view.route('/getusers')
 def getusers():
-    sql = SQLite.sqlite()
     with sql.db as con:
         con.row_factory = sqlite3.Row
         cur = con.cursor()
